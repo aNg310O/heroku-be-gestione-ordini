@@ -1,0 +1,31 @@
+{
+  "name": "app-ordini-be",
+  "version": "1.0.0",
+  "description": "be dell'app ordini",
+  "main": "server.js",
+  "engines": {
+    "node": "12.18.4",
+    "npm": "6.14.6"
+},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aNg310O/BE-app-gestione-ordini.git"
+  },
+  "author": "ADP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aNg310O/BE-app-gestione-ordini/issues"
+  },
+  "homepage": "https://github.com/aNg310O/BE-app-gestione-ordini#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.15"
+  }
+}
