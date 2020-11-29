@@ -23,6 +23,7 @@ module.exports = function(app) {
   // PER REPORT
   app.get("/gestione-ordine/todayOrder", [authJwt.verifyToken, authJwt.isAdmin], controller.todayOrder);
   app.get("/gestione-ordine/dateOrder/:orderDate", [authJwt.verifyToken, authJwt.isAdmin], controller.dateOrder);
+  app.get("/gestione-ordine/allOrder/:orderDate?", [authJwt.verifyToken, authJwt.isAdmin], controller.dateOrderAll);
 
   //API DI TEST
   app.get("/api/test/all", controller.allAccess);

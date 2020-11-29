@@ -216,6 +216,31 @@ exports.dateOrder = (req,res) => {
   )
 }
 
+exports.dateOrderAll = (req,res) => {
+  if(req.params.orderDate) {
+    Ordini.find({ dataInserimento: req.params.orderDate })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Errore nel recupero degli ordini."
+      });
+    });
+  } else {
+    Ordini.find()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Errore nel recupero degli ordini."
+      });
+    });
+  }
+};
 //TEST EXPORTS
 exports.allAccess = (req, res) => {
   res.status(200).send("Public Content.");
