@@ -241,9 +241,10 @@ exports.dateOrderAll = (req,res) => {
     });
   }
 };
+
 //TEST EXPORTS
 exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
+  res.status(200).send("Benvenuto, gestisci i tuoi ordini da qui.");
 };
 
 exports.userBoard = (req, res) => {
