@@ -77,11 +77,19 @@ exports.createOrdine = (req, res) => {
     } else {
       var myQty = req.body.pesoProdotto;
     }
+
+    var day;
+    if((new Date().getDate().toString().length) === 1) {
+      day = "0" + new Date().getDate();
+    } else {
+      day = new Date().getDate();
+    }
+
     const ordini = new Ordini({
       desc: req.body.desc,
       seller: req.body.seller,
       qty: req.body.qty,
-      dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}`,
+      dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}`,
       pesoTotale: myQty,
       note: req.body.note,
       isCustom: req.body.isCustom
@@ -100,8 +108,13 @@ exports.createOrdine = (req, res) => {
 };
 
 exports.findAllTodayUser = (req, res) => {
-  const seller=req.params.seller;
-  Ordini.find({ $and: [{ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}` }, { seller: req.params.seller }] })
+  var day;
+  if((new Date().getDate().toString().length) === 1) {
+    day = "0" + new Date().getDate();
+  } else {
+    day = new Date().getDate();
+  }
+  Ordini.find({ $and: [{ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}` }, { seller: req.params.seller }] })
     .then(data => {
       res.send(data);
     })
@@ -114,7 +127,13 @@ exports.findAllTodayUser = (req, res) => {
 };
 
 exports.findAllOrdini = (req, res) => {
-  Ordini.find({ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}` })
+  var day;
+  if((new Date().getDate().toString().length) === 1) {
+    day = "0" + new Date().getDate();
+  } else {
+    day = new Date().getDate();
+  }
+  Ordini.find({ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}` })
     .then(data => {
       res.send(data);
     })
@@ -151,7 +170,13 @@ exports.deleteOrdine = (req, res) => {
      API REPORTISTICA
   #########################*/
 exports.todayOrder = (req,res) => {
-  const today=String( `${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}`);
+  var day;
+  if((new Date().getDate().toString().length) === 1) {
+    day = "0" + new Date().getDate();
+  } else {
+    day = new Date().getDate();
+  }
+  const today=String( `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}`);
   Ordini.aggregate([{
     $match: {
       dataInserimento: today
@@ -244,7 +269,7 @@ exports.dateOrderAll = (req,res) => {
 
 //TEST EXPORTS
 exports.allAccess = (req, res) => {
-  res.status(200).send("Benvenuto, gestisci i tuoi ordini da qui.");
+  res.status(200).send("Public Content.");
 };
 
 exports.userBoard = (req, res) => {
