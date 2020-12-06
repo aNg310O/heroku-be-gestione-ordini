@@ -9,7 +9,7 @@ const Ordini = db.ordini;
 exports.findAllProduct = (req, res) => {
   const desc = req.query.desc;
   var condition = desc ? { desc: { $regex: new RegExp(desc), $options: "i" } } : {};
-  Prodotti.find(condition)
+  Prodotti.find(condition).sort({'desc': 1})
     .then(data => {
       res.status(200).send(data);
     })
@@ -114,7 +114,7 @@ exports.findAllTodayUser = (req, res) => {
   } else {
     day = new Date().getDate();
   }
-  Ordini.find({ $and: [{ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}` }, { seller: req.params.seller }] })
+  Ordini.find({ $and: [{ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}` }, { seller: req.params.seller }] }).sort({'desc': 1})
     .then(data => {
       res.send(data);
     })
@@ -133,7 +133,7 @@ exports.findAllOrdini = (req, res) => {
   } else {
     day = new Date().getDate();
   }
-  Ordini.find({ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}` })
+  Ordini.find({ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}` }).sort({'desc': 1})
     .then(data => {
       res.send(data);
     })
@@ -243,7 +243,7 @@ exports.dateOrder = (req,res) => {
 
 exports.dateOrderAll = (req,res) => {
   if(req.params.orderDate) {
-    Ordini.find({ dataInserimento: req.params.orderDate })
+    Ordini.find({ dataInserimento: req.params.orderDate }).sort({'desc': 1})
     .then(data => {
       res.send(data);
     })
@@ -269,7 +269,7 @@ exports.dateOrderAll = (req,res) => {
 
 //TEST EXPORTS
 exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
+  res.status(200).send("Benvenuto, gestisci i tuoi otdini da qui.");
 };
 
 exports.userBoard = (req, res) => {

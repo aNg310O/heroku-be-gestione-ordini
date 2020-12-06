@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
 
+process.env.TZ='Europe/Amsterdam';
 const app = express();
 
 var corsOptions = {
