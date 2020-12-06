@@ -196,7 +196,10 @@ exports.todayOrder = (req,res) => {
       dataInserimento: {
         $first: today
       }, 
-    }}
+    }},
+    { $sort: 
+      { _id: 1 }
+    }
   ], function(err, result) {
     if (err) {
       res.send({
@@ -229,7 +232,10 @@ exports.dateOrder = (req,res) => {
       dataInserimento: {
         $first: today
       }, 
-    }}
+    }},
+    { $sort: 
+      { _id: 1 }
+    }
   ], function(err, result) {
     if (err) {
       res.send({
