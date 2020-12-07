@@ -1,3 +1,3 @@
 module.exports = {
-  secret: "gestione-ordini-secret-key-super-secrets"
+  secret: process.env.SECRET
 };
