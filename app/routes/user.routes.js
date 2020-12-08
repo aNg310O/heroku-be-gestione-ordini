@@ -19,7 +19,7 @@ module.exports = function(app) {
   app.post("/gestione-ordini/ordine", [authJwt.verifyToken], controller.createOrdine);
   app.get("/gestione-ordini/ordini/:seller", [authJwt.verifyToken], controller.findAllTodayUser);
   app.get("/gestione-ordini/ordine/all", [authJwt.verifyToken, authJwt.isAdmin], controller.findAllOrdini);
-  app.delete("/gestione-ordini/ordine/:id", [authJwt.verifyToken, authJwt.isAdmin], controller.deleteOrdine);
+  app.delete("/gestione-ordini/ordine/:id", [authJwt.verifyToken], controller.deleteOrdine);
   // PER REPORT
   app.get("/gestione-ordine/todayOrder", [authJwt.verifyToken, authJwt.isAdmin], controller.todayOrder);
   app.get("/gestione-ordine/dateOrder/:orderDate", [authJwt.verifyToken, authJwt.isAdmin], controller.dateOrder);
