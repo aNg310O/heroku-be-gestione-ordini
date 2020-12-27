@@ -10,6 +10,7 @@ db.user = require("./user.model");
 db.prodotti = require("./prodotti.model")
 db.role = require("./role.model");
 db.ordini = require("./ordini.model");
+db.logs = require("./log.model")
 
 db.ROLES = ["user", "admin", "moderator"];
 

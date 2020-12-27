@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
     var schema = mongoose.Schema(
         {
-          desc: String,
+          desc: {type: String, index: true},
           grammatura: Number,
           pesoTotale: Number
         },

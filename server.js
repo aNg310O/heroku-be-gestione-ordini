@@ -1,3 +1,5 @@
+const compression = require('compression')
+var helmet = require('helmet');
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -10,8 +12,9 @@ var corsOptions = {
   origin: "*"
 };
 
+app.use(helmet());
+app.use(compression())
 app.use(cors(corsOptions));
-
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
