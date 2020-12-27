@@ -1,6 +1,7 @@
 const db = require("../models");
 const Prodotti = db.prodotti;
 const Ordini = db.ordini;
+const Log = db.logs;
 
 /*#########################
     API GESTIONE PRODOTTI
@@ -273,6 +274,25 @@ exports.dateOrderAll = (req,res) => {
   }
 };
 
+  exports.createLog = (req, res) => {  
+      const line = new Log({
+        severity: req.body.severity,
+        username: req.body.username,
+        page: req.body.page,
+        text: req.body.text
+      });
+      line
+        .save(line)
+        .then(data => {
+          res.status(200).send(data);
+        })
+        .catch(err => {
+          res.status(500).send({
+            message:
+              err.message || "Errore nella creazione del log"
+          });
+        });
+  };
 //TEST EXPORTS
 exports.allAccess = (req, res) => {
   res.status(200).send("Benvenuto, gestisci i tuoi otdini da qui.");

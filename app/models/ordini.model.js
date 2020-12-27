@@ -13,6 +13,8 @@ const mongoose = require("mongoose");
       { timestamps: true }
     );
 
+    schema.index({dataInserimento: 1, desc: 1});
+    schema.index({dataInserimento: 1, seller: 1});
     schema.method("toJSON", function() {
         const { __v, _id, ...object } = this.toObject();
         object.id = _id;

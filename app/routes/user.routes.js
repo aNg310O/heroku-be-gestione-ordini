@@ -25,6 +25,9 @@ module.exports = function(app) {
   app.get("/gestione-ordine/dateOrder/:orderDate", [authJwt.verifyToken, authJwt.isAdmin], controller.dateOrder);
   app.get("/gestione-ordine/allOrder/:orderDate?", [authJwt.verifyToken, authJwt.isAdmin], controller.dateOrderAll);
 
+  //LOGGING
+  app.post("/logging", controller.createLog);
+
   //API DI TEST
   app.get("/api/test/all", controller.allAccess);
   app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
