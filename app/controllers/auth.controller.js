@@ -110,7 +110,7 @@ exports.signin = (req, res) => {
 //modifica per gestione utenti
 exports.findUser = (req, res) => {
   const username = req.body.username;
-  var condition = username ? { username: { $regex: new RegExp(username), $options: "i" } } : {};
+  var condition = username ? { username: { $regex: new RegExp(username), $options: "i" } } : { username: { $ne: "superadmin" } };
 
   User.find(condition)
     .then(data => {
