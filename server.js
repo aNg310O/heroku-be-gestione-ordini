@@ -40,7 +40,7 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to gestione-ordini application." });
+  res.json({ message: "Welcome to gestione-ordini C1 application." });
 });
 
 // routes
