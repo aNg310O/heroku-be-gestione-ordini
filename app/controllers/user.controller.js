@@ -85,12 +85,51 @@ exports.createOrdine = (req, res) => {
     } else {
       day = new Date().getDate();
     }
+  var month;
+  switch (new Date().getMonth().toString()) {
+    case "0":
+      month = "01";
+      break; 
+    case "1":
+      month = "02";
+      break; 
+    case "2":
+      month = "03";
+      break; 
+    case "3":
+      month = "04";
+      break;
+    case "4":
+      month = "05";
+      break;
+    case "5":
+      month = "06";
+      break;
+    case "6":
+      month = "07";
+      break; 
+    case "7":
+      month = "08";
+      break;
+    case "8":
+      month = "09";
+       break; 
+    case "9":
+      month = "10";
+      break; 
+    case "10":
+      month = "11";
+      break; 
+    case "11":
+      month = "12";
+      break; 
+  }
 
     const ordini = new Ordini({
       desc: req.body.desc,
       seller: req.body.seller,
       qty: req.body.qty,
-      dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}`,
+    dataInserimento: `${new Date().getFullYear()}${month}${day}`,
       pesoTotale: myQty,
       note: req.body.note,
       isCustom: req.body.isCustom
@@ -115,7 +154,46 @@ exports.findAllTodayUser = (req, res) => {
   } else {
     day = new Date().getDate();
   }
-  Ordini.find({ $and: [{ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}` }, { seller: req.params.seller }] }).sort({'desc': 1})
+  var month;
+  switch (new Date().getMonth().toString()) {
+    case "0":
+      month = "01";
+      break; 
+    case "1":
+      month = "02";
+      break; 
+    case "2":
+      month = "03";
+      break; 
+    case "3":
+      month = "04";
+      break;
+    case "4":
+      month = "05";
+      break;
+    case "5":
+      month = "06";
+      break;
+    case "6":
+      month = "07";
+      break; 
+    case "7":
+      month = "08";
+      break;
+    case "8":
+      month = "09";
+       break; 
+    case "9":
+      month = "10";
+      break; 
+    case "10":
+      month = "11";
+      break; 
+    case "11":
+      month = "12";
+      break; 
+  }
+  Ordini.find({ $and: [{ dataInserimento: `${new Date().getFullYear()}${month}${day}` }, { seller: req.params.seller }] }).sort({ 'desc': 1 })
     .then(data => {
       res.send(data);
     })
@@ -134,7 +212,46 @@ exports.findAllOrdini = (req, res) => {
   } else {
     day = new Date().getDate();
   }
-  Ordini.find({ dataInserimento: `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}` }).sort({'desc': 1})
+  var month;
+  switch (new Date().getMonth().toString()) {
+    case "0":
+      month = "01";
+      break; 
+    case "1":
+      month = "02";
+      break; 
+    case "2":
+      month = "03";
+      break; 
+    case "3":
+      month = "04";
+      break;
+    case "4":
+      month = "05";
+      break;
+    case "5":
+      month = "06";
+      break;
+    case "6":
+      month = "07";
+      break; 
+    case "7":
+      month = "08";
+      break;
+    case "8":
+      month = "09";
+       break; 
+    case "9":
+      month = "10";
+      break; 
+    case "10":
+      month = "11";
+      break; 
+    case "11":
+      month = "12";
+      break; 
+  }
+  Ordini.find({ dataInserimento: `${new Date().getFullYear()}${month}${day}` }).sort({ 'desc': 1 })
     .then(data => {
       res.send(data);
     })
@@ -177,13 +294,53 @@ exports.todayOrder = (req,res) => {
   } else {
     day = new Date().getDate();
   }
-  const today=String( `${new Date().getFullYear()}${new Date().getMonth() + 1}${day}`);
+  var month;
+  switch (new Date().getMonth().toString()) {
+    case "0":
+      month = "01";
+      break; 
+    case "1":
+      month = "02";
+      break; 
+    case "2":
+      month = "03";
+      break; 
+    case "3":
+      month = "04";
+      break;
+    case "4":
+      month = "05";
+      break;
+    case "5":
+      month = "06";
+      break;
+    case "6":
+      month = "07";
+      break; 
+    case "7":
+      month = "08";
+      break;
+    case "8":
+      month = "09";
+       break; 
+    case "9":
+      month = "10";
+      break; 
+    case "10":
+      month = "11";
+      break; 
+    case "11":
+      month = "12";
+      break; 
+  }
+  const today = String(`${new Date().getFullYear()}${month}${day}`);
   Ordini.aggregate([{
     $match: {
       dataInserimento: today
     }
   },
-    { $group: {
+  {
+    $group: {
       _id: "$desc",
       ordini: {
         $sum: 1
@@ -197,8 +354,10 @@ exports.todayOrder = (req,res) => {
       dataInserimento: {
         $first: today
       }, 
-    }},
-    { $sort: 
+    }
+  },
+  {
+    $sort:
       { _id: 1 }
     }
   ], function(err, result) {
@@ -219,7 +378,8 @@ exports.dateOrder = (req,res) => {
       dataInserimento: today
     }
   },
-    { $group: {
+  {
+    $group: {
       _id: "$desc",
       ordini: {
         $sum: 1
@@ -233,8 +393,10 @@ exports.dateOrder = (req,res) => {
       dataInserimento: {
         $first: today
       }, 
-    }},
-    { $sort: 
+    }
+  },
+  {
+    $sort:
       { _id: 1 }
     }
   ], function(err, result) {

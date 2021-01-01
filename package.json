@@ -1,7 +1,7 @@
 {
-  "name": "c1-app-ordini-be",
+  "name": "c2-app-ordini-be",
   "version": "1.0.0",
-  "description": "be dell'app ordini C1",
+  "description": "be dell'app ordini C2",
   "main": "server.js",
   "engines": {
     "node": "12.18.4",

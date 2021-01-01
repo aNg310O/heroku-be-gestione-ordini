@@ -1,4 +1,4 @@
-# BE 1.0.0 dell'app gestione-ordini C1
+# BE 1.0.0 dell'app gestione-ordini C2
 
 Esposizione delle API su heroku
 
