@@ -1,5 +1,6 @@
 const db = require("../models");
 const Prodotti = db.prodotti;
+const Prodottisplit = db.prodottisplit;
 const Ordini = db.ordini;
 const Log = db.logs;
 
@@ -44,6 +45,97 @@ exports.createProduct = (req, res) => {
 };
 
 exports.deleteProduct = (req, res) => {
+  const prodDaCanc = req.params.id;
+  Prodotti.findByIdAndDelete(prodDaCanc)
+    .then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `${err.message} - Non posso cancellare il prodotto ${prodDaCanc} con id=${id}`
+        });
+      } else {
+        res.status(200).send({
+          message: `Prodotto ${prodDaCanc} cancellato!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: `${err.message} - Non posso cancellare il prodotto ${prodDaCanc} con id=${id}`
+      });
+    });
+};
+  exports.findAllProductsplit = (req, res) => {
+    const prodotto = req.query.prodotto;
+    var condition = prodotto ? { prodotto: { $regex: new RegExp(prodotto), $options: "i" } } : {};
+    Prodottisplit.find(condition).sort({ 'prodotto': 1, 'pesoTotale': 1 })
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: `${err.message} - Errore nel recupero dei prodotti.`
+        });
+      });
+  };
+  exports.findProductsplit = (req, res) => {
+    Prodottisplit.find().distinct('prodotto')
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: `${err.message} - Errore nel recupero dei prodotti.`
+        });
+      });
+  };
+  exports.findPesosplit = (req, res) => {
+    const prodotto = req.params.prodotto;
+    var condition = { prodotto: { $regex: new RegExp(prodotto), $options: "i" } };
+    Prodottisplit.find(condition).distinct('pesoTotale')
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: `${err.message} - Errore nel recupero dei prodotti.`
+        });
+      });
+  };
+  exports.findPezzaturasplit = (req, res) => {
+    const prodotto = req.query.prodotto;
+    const peso = req.query.peso;
+    Prodottisplit.find({ $and: [{ prodotto: prodotto }, { pesoTotale: peso }] }).distinct('pezzatura')
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: `${err.message} - Errore nel recupero dei prodotti.`
+        });
+      });
+  };
+  exports.createProductsplit = (req, res) => {
+    if (!req.body.prodotto) {
+      res.status(400).send({ message: "Il prodotto non può essere vuoto!" });
+      return;
+    }
+    const prodotti = new Prodottisplit({
+      prodotto: req.body.prodotto,
+      pesoTotale: req.body.pesoTotale,
+      pezzatura: req.body.pezzatura
+    });
+    prodotti
+      .save(prodotti)
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: `${err.message} - Errore nella creazione del prodotto.`
+        });
+      });
+  };
+  exports.deleteProductsplit = (req, res) => {
   const prodDaCanc = req.params.id;
   Prodotti.findByIdAndDelete(prodDaCanc)
     .then(data => {
@@ -130,7 +222,9 @@ exports.createOrdine = (req, res) => {
       seller: req.body.seller,
       qty: req.body.qty,
     dataInserimento: `${new Date().getFullYear()}${month}${day}`,
-      pesoTotale: myQty,
+    pesoTotale: req.body.pesoTotale,
+    grammatura: req.body.grammatura,
+    pesoProdotto: req.body.pesoProdotto,
       note: req.body.note,
       isCustom: req.body.isCustom
     });
@@ -341,7 +435,11 @@ exports.todayOrder = (req,res) => {
   },
   {
     $group: {
-      _id: "$desc",
+      _id: {
+    "desc": "$desc",
+    "pesoProdotto": "$pesoProdotto",
+    "pezzatura": "$grammatura"
+  },
       ordini: {
         $sum: 1
       }, 
@@ -380,7 +478,11 @@ exports.dateOrder = (req,res) => {
   },
   {
     $group: {
-      _id: "$desc",
+      _id: {
+    "desc": "$desc",
+    "pesoProdotto": "$pesoProdotto",
+    "pezzatura": "$grammatura"
+  },
       ordini: {
         $sum: 1
       }, 

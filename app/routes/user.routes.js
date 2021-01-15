@@ -15,6 +15,13 @@ module.exports = function(app) {
   app.delete("/gestione-ordini/prodotto/:id", [authJwt.verifyToken, authJwt.isAdmin], controller.deleteProduct);
   app.post("/gestione-ordini/prodotti", [authJwt.verifyToken, authJwt.isAdmin], controller.createProduct);
 
+  //GESTIONE PRODOTTI SPLIT
+  app.get("/gestione-ordini/prodottsplit", [authJwt.verifyToken], controller.findAllProductsplit);
+  app.get("/gestione-ordini/prodottisplit", [authJwt.verifyToken], controller.findProductsplit);
+  app.get("/gestione-ordini/pesosplit/:prodotto", [authJwt.verifyToken], controller.findPesosplit);
+  app.get("/gestione-ordini/pezzaturasplit", [authJwt.verifyToken], controller.findPezzaturasplit);
+  app.delete("/gestione-ordini/prodottosplit/:id", [authJwt.verifyToken, authJwt.isAdmin], controller.deleteProductsplit);
+  app.post("/gestione-ordini/prodottisplit", [authJwt.verifyToken, authJwt.isAdmin], controller.createProductsplit);
   //GESTIONE ORDINI
   app.post("/gestione-ordini/ordine", [authJwt.verifyToken], controller.createOrdine);
   app.get("/gestione-ordini/ordini/:seller", [authJwt.verifyToken], controller.findAllTodayUser);

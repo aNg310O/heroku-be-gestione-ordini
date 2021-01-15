@@ -113,6 +113,7 @@ exports.findUser = (req, res) => {
   var condition = username ? { username: { $regex: new RegExp(username), $options: "i" } } : { username: { $ne: "superadmin" } };
 
   User.find(condition)
+    .populate("roles", "-__v")
     .then(data => {
       res.status(200).send(data);
     })

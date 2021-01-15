@@ -8,6 +8,7 @@ db.mongoose = mongoose;
 db.url = dbConfig.url;
 db.user = require("./user.model");
 db.prodotti = require("./prodotti.model")
+db.prodottisplit = require("./prodottisplit.model")
 db.role = require("./role.model");
 db.ordini = require("./ordini.model");
 db.logs = require("./log.model")

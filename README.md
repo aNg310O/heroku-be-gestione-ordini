@@ -1,6 +1,7 @@
-# BE 1.0.0 dell'app gestione-ordini C2
+# BE 1.0.0 dell'app gestione-ordini dark
 
-Esposizione delle API su heroku
+* Implementate API per nuova gestione dei prodotti inserita nel FE dark
+
 
 ## Project setup
 ```

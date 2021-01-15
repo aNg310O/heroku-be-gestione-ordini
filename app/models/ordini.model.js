@@ -5,8 +5,9 @@ const mongoose = require("mongoose");
         seller: String,
         dataInserimento: String,
         qty: Number,
-        grammatura: Number,
+        grammatura: String,
         pesoTotale: Number,
+        pesoProdotto: Number,
         note: String,
         isCustom: Boolean     
       },
