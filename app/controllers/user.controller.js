@@ -67,7 +67,7 @@ exports.deleteProduct = (req, res) => {
   exports.findAllProductsplit = (req, res) => {
     const prodotto = req.query.prodotto;
     var condition = prodotto ? { prodotto: { $regex: new RegExp(prodotto), $options: "i" } } : {};
-    Prodottisplit.find(condition).sort({ 'prodotto': 1, 'pesoTotale': 1 })
+    Prodottisplit.find(condition).sort({ 'prodotto': 1, 'pesoTotale': 1, 'grammatura': 1 })
       .then(data => {
         res.status(200).send(data);
       })
