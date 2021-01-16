@@ -104,7 +104,7 @@ exports.deleteProduct = (req, res) => {
   exports.findPezzaturasplit = (req, res) => {
     const prodotto = req.query.prodotto;
     const peso = req.query.peso;
-    Prodottisplit.find({ $and: [{ prodotto: prodotto }, { pesoTotale: peso }] }).distinct('pezzatura')
+    Prodottisplit.find({ $and: [{ prodotto: prodotto }, { pesoTotale: peso }] }).distinct('pezzatura').collation({ locale: "en_US", numericOrdering: true })
       .then(data => {
         res.status(200).send(data);
       })
