@@ -137,7 +137,7 @@ exports.deleteProduct = (req, res) => {
   };
   exports.deleteProductsplit = (req, res) => {
   const prodDaCanc = req.params.id;
-  Prodotti.findByIdAndDelete(prodDaCanc)
+  Prodottisplit.findByIdAndDelete(prodDaCanc)
     .then(data => {
       if (!data) {
         res.status(404).send({
