@@ -408,6 +408,65 @@ exports.deleteOrdine = (req, res) => {
 /*#########################
      API REPORTISTICA
   #########################*/
+
+exports.findOrderMonthYear = (req, res) => {
+  Ordini.aggregate([{
+    $project: {
+      'monthyear': {
+        $substr: [
+          "$dataInserimento",0,6
+        ]
+      }
+    }
+  },
+  {
+  $group: {
+    _id: "$monthyear",
+    dataInserimento: {$first: "$monthyear"}
+  }
+  },
+  {
+    $sort:
+      { _id: 1 }
+  }], function(err, result) {
+    if (err) {
+      res.send({
+        message: `Non riesco ad aggregare gli ordini ${err}`
+      })
+    }
+    res.send(result);
+  }
+  )};
+
+  exports.findOrderYear = (req, res) => {
+    Ordini.aggregate([{
+      $project: {
+        'monthyear': {
+          $substr: [
+            "$dataInserimento",0,4
+          ]
+        }
+      }
+    },
+    {
+    $group: {
+      _id: "$monthyear",
+      dataInserimento: {$first: "$monthyear"}
+    }
+    },
+    {
+      $sort:
+        { _id: 1 }
+    }], function(err, result) {
+      if (err) {
+        res.send({
+          message: `Non riesco ad aggregare gli ordini ${err}`
+        })
+      }
+      res.send(result);
+    }
+    )};
+
 exports.todayOrder = (req, res) => {
   var day;
   if ((new Date().getDate().toString().length) === 1) {
@@ -523,6 +582,44 @@ exports.dateOrder = (req, res) => {
       },
       dataInserimento: {
         $first: today
+      },
+    }
+  },
+  {
+    $sort:
+      { _id: 1 }
+  }
+  ], function (err, result) {
+    if (err) {
+      res.send({
+        message: `Non riesco ad aggregare gli ordini ${err}`
+      })
+    }
+    res.send(result);
+  }
+  )
+}
+
+
+exports.monthyearReport = (req, res) => {
+  const search = String(req.params.monthyear);
+  Ordini.aggregate([{
+    $match: {
+      dataInserimento: new RegExp(`^${search}`)
+    }
+  },
+  {
+    $group: {
+      _id: {
+    "desc": "$desc",
+    "pesoProdotto": "$pesoProdotto",
+    "pezzatura": "$grammatura"
+  },
+      totale: {
+        $sum: "$pesoTotale"
+      },
+      qty: {
+        $sum: "$qty"
       },
     }
   },

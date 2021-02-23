@@ -32,6 +32,9 @@ module.exports = function(app) {
   app.get("/gestione-ordine/todayOrder", [authJwt.verifyToken, authJwt.isAdmin], controller.todayOrder);
   app.get("/gestione-ordine/dateOrder/:orderDate", [authJwt.verifyToken, authJwt.isAdmin], controller.dateOrder);
   app.get("/gestione-ordine/allOrder/:orderDate?", [authJwt.verifyToken, authJwt.isAdmin], controller.dateOrderAll);
+  app.get("/gestione-ordine/monthyearReport/:monthyear", [authJwt.verifyToken, authJwt.isAdmin], controller.monthyearReport);
+  app.get("/gestione-ordine/availableMonth", [authJwt.verifyToken, authJwt.isAdmin], controller.findOrderMonthYear);
+  app.get("/gestione-ordine/availableYear", [authJwt.verifyToken, authJwt.isAdmin], controller.findOrderYear);
 
   //LOGGING
   app.post("/logging", controller.createLog);
